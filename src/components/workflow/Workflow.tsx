@@ -1,16 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-/*
-ZROBIĆ SCHEMAT
 
-1. wpisywanie do inputu po literce -> zapobieganie przed ctrl + A -> backspace && przed wklejeniem dużej ilości znaków
-2. lista dostepnych znaków (uwzględnić:
-    • zmiane spacji na znak specjalny,
-    • małe i duże litery,
-    • cyfry
-    )
-3. rozbić elementy
-4. ekran koncowy (pobrać react-router-dom)
-*/
 const Workflow = () => {
   interface Iword {
     [x: string]: any;
@@ -70,18 +59,6 @@ const Workflow = () => {
         ];
       });
     }
-    // for (const dataSign of data) {
-    //   setWord((prevState) => {
-    //     return [
-    //       ...prevState,
-    //       {
-    //         sign: dataSign !== " " ? dataSign : space,
-    //         // sign: dataSign,
-    //         correct: null,
-    //       },
-    //     ];
-    //   });
-    // }
   }, []);
 
   return (
