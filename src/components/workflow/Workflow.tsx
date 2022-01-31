@@ -1,33 +1,49 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { TimeHTMLAttributes, useEffect, useRef, useState } from "react";
+import FinishFun from "./Finish";
+import { Iword, IcurrentWordID, KeyboardEvent, KeyAllowed } from "./interfaces";
+
+//Konwerter do: Spacji, Myślników
+//Ekran końcowy
+interface IonRenderProps {
+  character: Iword;
+  index: number;
+}
 
 const Workflow = () => {
-  interface Iword {
-    [x: string]: any;
-    splitedWord: string | string[] | object | object[];
-    correct: boolean | null;
-  }
-
-  interface IcurrentWordID {
-    word: number;
-    sign: number;
-  }
-
   const [word, setWord] = useState<Iword[]>([]);
   const [currentWordID, setCurrentWordID] = useState<IcurrentWordID>({
     word: 0,
     sign: 0,
   });
+
+  const [startTyping, setStartTyping] = useState(false);
+  const [finishTyping, setFinishTyping] = useState(false);
+
+  const [currentHighOfText, setCurrentHighOfText] = useState<
+    number | undefined
+  >(0);
+  const [typingTime, setTypingTime] = useState<number>(0);
+
   const positionCurrent = useRef<HTMLSpanElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const data =
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem dicta blanditiis, perferendis ex non esse accusantium quos accusamus, velit, doloribus ducimus quibusdam modi enim veritatis sit! Error quidem sed magni exercitationem impedit illum iusto. Ipsa iusto hic laboriosam?";
-
+    // "Zakopane - miasto w południowej Polsce, w województwie małopolskim, siedziba powiatu tatrzańskiego. Największa miejscowość w bezpośrednim otoczeniu Tatr, duży ośrodek sportów zimowych, potocznie nazywany zimową stolicą Polski. W jego granicach administracyjnych znajduje się znaczna część Tatrzańskiego Parku Narodowego (od Doliny Suchej Wody do Doliny Małej Łąki). Według danych GUS z 31 grudnia 2020 r. miasto liczyło 26 846 mieszkańców, będąc tym samym drugim pod względem ludności - po Nowym Targu - miastem Podhala.";
+    "Zakopane - miasto w południowej Polsce";
   const dataSplit = data.split(" ");
 
-  const correctKeyPress = (event: any) => {
+  const correctKeyPress = (event: KeyboardEvent) => {
     const tempArray = [...word];
 
-    if (event.keyCode === 8 || event.keyCode === 46) {
+    /**
+     * Structure below is responsible for handling the key
+     * press and move current typing sign in the right place
+     */
+
+    if (
+      event.keyCode === KeyAllowed.BACKSPACE ||
+      event.keyCode === KeyAllowed.DELETE
+    ) {
       if (currentWordID.word === 0 && currentWordID.sign === 0) return 0;
       else {
         word[currentWordID.word][currentWordID.sign].correct = null;
@@ -39,23 +55,26 @@ const Workflow = () => {
         else
           setCurrentWordID({
             word: currentWordID.word - 1,
-            sign: word[currentWordID.word-1].length-1,
+            sign: word[currentWordID.word - 1].length - 1,
           });
         return setWord(tempArray);
       }
     }
 
-    if (
-      (event.keyCode >= 64 && event.keyCode <= 230) ||
-      event.keyCode === 32 ||
-      event.keyCode === 49
-    ) {
+    /**
+     * Check if pressed key is allowed in 'enum KeyAllowed'
+     */
+
+    if (KeyAllowed[event.keyCode]) {
+      setStartTyping(true);
+
       if (
         word[currentWordID.word][currentWordID.sign].splitedWord === event.key
       ) {
         tempArray[currentWordID.word][currentWordID.sign].correct = true;
         setWord(tempArray);
-        if (currentWordID.sign !== word[currentWordID.word].length-1)
+
+        if (currentWordID.sign !== word[currentWordID.word].length - 1)
           setCurrentWordID({
             word: currentWordID.word,
             sign: currentWordID.sign + 1,
@@ -64,23 +83,35 @@ const Workflow = () => {
       } else {
         tempArray[currentWordID.word][currentWordID.sign].correct = false;
         setWord(tempArray);
-        if (currentWordID.sign !== word[currentWordID.word].length-1 )
+        if (currentWordID.sign !== word[currentWordID.word].length - 1)
           setCurrentWordID({
             word: currentWordID.word,
             sign: currentWordID.sign + 1,
           });
         else setCurrentWordID({ word: currentWordID.word + 1, sign: 0 });
       }
+      if (
+        currentWordID.word === word.length - 1 &&
+        currentWordID.sign === word[currentWordID.word].length - 1
+      ) {
+        console.log("Koniec");
+        setStartTyping(false);
+        return setFinishTyping(true);
+      }
     }
   };
-  const space = "\u00A0";
 
   useEffect(() => {
-    for (const dataSign of dataSplit) {
+    console.log("data.length", data.length);
+    dataSplit.map((dataSign, index) => {
       const splitedData = dataSign.split("");
-      splitedData.push(space);
+      // console.log(dataSplit[dataSplit.length-1][dataSplit[dataSplit.length-1].length-1])
+      // console.log('index', index)
+      // console.log('dataSplit[dataSplit.length - 1].length - 1', dataSplit[dataSplit.length - 1].length - 1)
+      // console.log('splitedData.length',dataSplit.length-1 )
+      if (index !== dataSplit.length - 1) splitedData.push(KeyAllowed[32]);
 
-      setWord((prevState): any[] => {
+      setWord((prevState: Iword[""]) => {
         return [
           ...prevState,
           splitedData.map((splitedData) => ({
@@ -89,46 +120,77 @@ const Workflow = () => {
           })),
         ];
       });
-    }
+    });
   }, []);
 
-  return (
+  useEffect(() => {
+    // console.log('finishTyping: ',!finishTyping)
+    if (!finishTyping) {
+      const tempPosition = positionCurrent.current?.offsetTop
+      tempPosition && setCurrentHighOfText(tempPosition - 4);
+      window.addEventListener("resize", () => AddToProp(tempPosition));
+
+      return () => {
+        window.removeEventListener("resize", () => AddToProp(tempPosition));
+      };
+    }
+    else console.log('blad')
+  }, [currentWordID.sign, finishTyping]);
+
+  const AddToProp = (position:number|undefined) => {
+    console.log("resize");
+    return position && setCurrentHighOfText(position - 4);
+  };
+
+  useEffect(() => {
+    const timer: any =
+      startTyping && setTimeout(() => setTypingTime(typingTime + 1), 1000);
+      // console.log(timer);
+      
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [typingTime, startTyping]);
+
+  return !finishTyping ? (
     <>
-      <div className="workflow">
+      <div className="workflow" onClick={() => inputRef.current?.focus()}>
         <div
-          style={{ transform: `translate(0, -${4}px)` }}
+          style={{
+            transform: `translate(0, -${currentHighOfText}px)`,
+          }}
           className="workflow__container"
         >
-          {console.log(currentWordID)}
           {word.map((state, indexWord): JSX.Element => {
             return (
               <div key={`word${indexWord}`}>
-                {state.map((character: any, index: number): JSX.Element => {
-                  return currentWordID.word === indexWord && currentWordID.sign === index ? (
+                {state.map((character: Iword, index: number): JSX.Element => {
+                  return currentWordID.word === indexWord &&
+                    currentWordID.sign === index ? (
                     <span
                       key={`sign${index}`}
                       className="workflow__sign workflow__sign--current"
                       ref={positionCurrent}
                     >
-                      {character.splitedWord}
+                      {character.splitedWord.replace(" ", "\u00A0")}
                     </span>
                   ) : character.correct === null ? (
                     <span key={`sign${index}`} className="workflow__sign">
-                      {character.splitedWord}
+                      {character.splitedWord.replace(" ", "\u00A0")}
                     </span>
                   ) : character.correct === true ? (
                     <span
                       key={`sign${index}`}
                       className="workflow__sign workflow__sign--correct"
                     >
-                      {character.splitedWord}
+                      {character.splitedWord.replace(" ", "\u00A0")}
                     </span>
                   ) : (
                     <span
                       key={`sign${index}`}
                       className="workflow__sign workflow__sign--wrong"
                     >
-                      {character.splitedWord}
+                      {character.splitedWord.replace(" ", "\u00A0")}
                     </span>
                   );
                 })}
@@ -137,7 +199,20 @@ const Workflow = () => {
           })}
         </div>
       </div>
-      <input autoFocus onKeyDown={(e) => correctKeyPress(e)} type="text" />
+      {typingTime}
+      <input
+        autoFocus
+        ref={inputRef}
+        className="typing--input"
+        onKeyDown={(e) => correctKeyPress(e)}
+        type="text"
+      />
+    </>
+  ) : (
+    // <p>tak</p>
+    <>
+      {console.log("update w Finish")}
+      <FinishFun score={word} typingTime={typingTime} />
     </>
   );
 };

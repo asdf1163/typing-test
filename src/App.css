@@ -48,3 +48,11 @@ body {
 .workflow__sign--wrong {
   background-color: red;
 }
+
+.typing--input {
+  position: absolute;
+  height: 0;
+  width: 0;
+  opacity: 0;
+  z-index: -1;
+}

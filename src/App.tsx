@@ -1,13 +1,19 @@
-import React from 'react';
-import './App.css';
-import Header from './components/Header';
-import Workflow from './components/workflow/Workflow';
+import React from "react";
+import "./App.css";
+import Navbar from "./components/navbar/Navbar";
+import Workflow from "./components/workflow/Workflow";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <Header/>
-      <Workflow/>
+      <Navbar />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Workflow />} />
+          {/* <Route path="/" element={<Workflow />} /> */}
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
