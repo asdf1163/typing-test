@@ -28,7 +28,6 @@ body {
 .workflow__container {
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: space-between; */
 }
 
 .workflow__sign {
@@ -42,7 +41,6 @@ body {
   background-color: gray;
 }
 .workflow__sign--correct {
-  /* background-color: #006600; */
   color: rgb(1, 150, 1);
 }
 .workflow__sign--wrong {

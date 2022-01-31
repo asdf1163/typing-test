@@ -1,13 +1,6 @@
-import React, { TimeHTMLAttributes, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FinishFun from "./Finish";
 import { Iword, IcurrentWordID, KeyboardEvent, KeyAllowed } from "./interfaces";
-
-//Konwerter do: Spacji, Myślników
-//Ekran końcowy
-interface IonRenderProps {
-  character: Iword;
-  index: number;
-}
 
 const Workflow = () => {
   const [word, setWord] = useState<Iword[]>([]);
@@ -105,10 +98,6 @@ const Workflow = () => {
     console.log("data.length", data.length);
     dataSplit.map((dataSign, index) => {
       const splitedData = dataSign.split("");
-      // console.log(dataSplit[dataSplit.length-1][dataSplit[dataSplit.length-1].length-1])
-      // console.log('index', index)
-      // console.log('dataSplit[dataSplit.length - 1].length - 1', dataSplit[dataSplit.length - 1].length - 1)
-      // console.log('splitedData.length',dataSplit.length-1 )
       if (index !== dataSplit.length - 1) splitedData.push(KeyAllowed[32]);
 
       setWord((prevState: Iword[""]) => {
@@ -123,30 +112,27 @@ const Workflow = () => {
     });
   }, []);
 
+  const AddToProp = () => {
+    console.log("resize");
+    return positionCurrent.current?.offsetTop && setCurrentHighOfText(positionCurrent.current?.offsetTop + 4);
+  };
+
   useEffect(() => {
-    // console.log('finishTyping: ',!finishTyping)
     if (!finishTyping) {
-      const tempPosition = positionCurrent.current?.offsetTop
+      const tempPosition = positionCurrent.current?.offsetTop;
       tempPosition && setCurrentHighOfText(tempPosition - 4);
-      window.addEventListener("resize", () => AddToProp(tempPosition));
+      window.addEventListener("resize", AddToProp);
 
       return () => {
-        window.removeEventListener("resize", () => AddToProp(tempPosition));
+        window.removeEventListener("resize", AddToProp);
       };
-    }
-    else console.log('blad')
+    } else console.log("blad");
   }, [currentWordID.sign, finishTyping]);
-
-  const AddToProp = (position:number|undefined) => {
-    console.log("resize");
-    return position && setCurrentHighOfText(position - 4);
-  };
 
   useEffect(() => {
     const timer: any =
       startTyping && setTimeout(() => setTypingTime(typingTime + 1), 1000);
-      // console.log(timer);
-      
+
     return () => {
       clearTimeout(timer);
     };
@@ -209,7 +195,6 @@ const Workflow = () => {
       />
     </>
   ) : (
-    // <p>tak</p>
     <>
       {console.log("update w Finish")}
       <FinishFun score={word} typingTime={typingTime} />

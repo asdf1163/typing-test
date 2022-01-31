@@ -33,7 +33,7 @@ const Navbar = () => {
         </div>
         <div className="user__tokens">
           <p className="user__tokens--amount">4201</p>
-          <img src={TokenImage} height={iconSize} width={iconSize} />
+          <img src={TokenImage} height={iconSize} width={iconSize} alt="token" />
         </div>
         <div className="user__profile">
           <FaUserCircle size={iconSize} />
