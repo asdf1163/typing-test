@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import FinishFun from "./Finish";
-import { Iword, IcurrentWordID, KeyboardEvent, KeyAllowed } from "./interfaces";
+import { Iword, IcurrentWordID, KeyboardEvent, KeyAllowed } from "./workflow.interfaces";
 
 const Workflow = () => {
   const [word, setWord] = useState<Iword[]>([]);
@@ -30,7 +30,7 @@ const Workflow = () => {
 
     /**
      * Structure below is responsible for handling the key
-     * press and move current typing sign in the right place
+     * press and move current typing sign in right place
      */
 
     if (
@@ -100,7 +100,7 @@ const Workflow = () => {
       const splitedData = dataSign.split("");
       if (index !== dataSplit.length - 1) splitedData.push(KeyAllowed[32]);
 
-      setWord((prevState: Iword[""]) => {
+      return setWord((prevState: Iword[""]) => {
         return [
           ...prevState,
           splitedData.map((splitedData) => ({
@@ -110,11 +110,15 @@ const Workflow = () => {
         ];
       });
     });
+    // eslint-disable-next-line
   }, []);
 
   const AddToProp = () => {
     console.log("resize");
-    return positionCurrent.current?.offsetTop && setCurrentHighOfText(positionCurrent.current?.offsetTop + 4);
+    return (
+      positionCurrent.current?.offsetTop &&
+      setCurrentHighOfText(positionCurrent.current?.offsetTop + 4)
+    );
   };
 
   useEffect(() => {
@@ -132,7 +136,7 @@ const Workflow = () => {
   useEffect(() => {
     const timer: any =
       startTyping && setTimeout(() => setTypingTime(typingTime + 1), 1000);
-
+    console.log(timer);
     return () => {
       clearTimeout(timer);
     };

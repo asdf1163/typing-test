@@ -5,11 +5,16 @@ body {
 }
 
 .App {
-  text-align: center;
+  /* text-align: center; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+a{
+  text-decoration: none;
+  color:unset;
 }
 
 .workflow {

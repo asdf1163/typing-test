@@ -1,0 +1,305 @@
+:root {
+  --disableColor: #474747;
+  --tileColorDefault: #b4b4b4;
+}
+
+.main {
+  height: 90vh;
+  width: 100%;
+  color: black;
+  font-weight: 500;
+}
+.categories {
+  height: 15%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.categories__options {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+}
+
+.categories__options--button {
+  background-color: rgb(233, 233, 233);
+  border: none;
+  width: 180px;
+  height: 45px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: minmax(400px, 30%) minmax(300px, 20%) minmax(
+      300px,
+      20%
+    );
+  grid-template-rows: minmax(230px, 60%) minmax(80px, 15%) minmax(120px, 130px);
+  height: 75%;
+  width: 100%;
+  gap: 2vh 4vw;
+  justify-content: center;
+}
+
+.tile__container {
+  height: 100%;
+  width: 100%;
+  background-color: var(--tileColorDefault);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tiles__proggress,
+.tiles__lesson,
+.tiles_freindscore,
+.tile__challenge,
+.tile__topten {
+  font-size: 1.2rem;
+  height: 95%;
+  width: 90%;
+}
+
+.tile__title {
+  margin: 6px 0;
+}
+.tile__proggress--container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 90%;
+}
+.tiles__proggress--chart {
+  height: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: rgb(46, 46, 46); */
+}
+.tiles__proggress--score {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: white;
+  /* height: 25%; */
+}
+
+.tiles__proggress--score .score {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  line-height: 1.4rem;
+}
+
+.score__title {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.score__value {
+  font-size: 1.8rem;
+  font-weight: 600;
+  word-spacing: 1rem;
+  margin-top: 2px;
+}
+
+.score__unit {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.places {
+  display: flex;
+  flex-direction: column;
+}
+.user {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  padding: 5px 0;
+}
+.user__avatar {
+  width: 40px;
+  height: 40px;
+  background-color: black;
+  border-radius: 30px;
+}
+
+.user__avatar--img{
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+}
+
+
+.user__name {
+}
+.user__record {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user__record--value {
+  font-size: 1.5rem;
+}
+.user__record--unit {
+  font-size: 0.6rem;
+}
+
+.lesson {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.lesson__proggress {
+  width: 100%;
+  line-height: 2rem;
+}
+
+.lesson__proggress--information {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+}
+.lesson__proggress--title {
+  font-size: 1rem;
+}
+.lesson__proggress--percent {
+  font-size: 0.8rem;
+}
+.lesson__proggress__line {
+  background-color: black;
+  border-radius: 10px;
+  height: 5px;
+  width: 90%;
+}
+.lesson__proggress__line--resault {
+  background-color: #4f4ff8;
+  border-radius: 10px;
+  height: 5px;
+  width: 60%;
+}
+.lesson__button {
+}
+.lesson__button--button {
+  color: white;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: none;
+  background-color: #0d0da5;
+  cursor: pointer;
+}
+
+.challenge {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.challenge__proggress {
+  height: 50px;
+  width: 100%;
+  line-height: 2rem;
+}
+
+.challenge__proggress--passed {
+  height: 50px;
+  width: 100%;
+  line-height: 2rem;
+  /* background-color: rgb(255, 50, 50) !important; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--disableColor) !important;
+}
+
+.challenge__proggress__line--passed {
+  background-color: var(--disableColor) !important;
+}
+
+.challenge__proggress--information {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.challenge__proggress--title {
+  font-size: 1rem;
+}
+.challenge__proggress--percent {
+  font-size: 0.8rem;
+}
+
+.challenge__proggress__line {
+  background-color: black;
+  border-radius: 10px;
+  height: 5px;
+  width: 100%;
+}
+.challenge__proggress__line--resault {
+  background-color: #4f4ff8;
+  border-radius: 10px;
+  height: 5px;
+  width: 60%;
+}
+
+/* .tiles__proggress{
+    
+}
+.tiles_freindscore {
+    
+}
+.tile__topten {
+}
+.tiles__lesson {
+    
+}
+.tile__challenge {
+    
+    /* grid-row-end: span 3; 
+} */
+
+.tile__container:nth-child(1) {
+  grid-column: 1;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  /* background-image: linear-gradient(#7d7a00 10%, #3bff3b); */
+  background-image: linear-gradient(#549e57 10%, #141414 85%);
+  /* 036c07 */
+}
+.tile__container:nth-child(2) {
+  grid-column: 2;
+  grid-row-end: 0;
+}
+.tile__container:nth-child(3) {
+  grid-row-end: span 3;
+}
+.tile__container:nth-child(4) {
+  grid-column: 1;
+  grid-row-end: 4;
+}
+.tile__container:nth-child(5) {
+  grid-column: 2;
+  grid-row-start: 2;
+  grid-row-end: 4;
+}

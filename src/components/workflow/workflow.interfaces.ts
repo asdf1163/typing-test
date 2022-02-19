@@ -1,5 +1,5 @@
 export interface Iword {
-  [x: string]: any;
+  [x:string]:any;
   splitedWord: string;
   correct: boolean | null;
 }
