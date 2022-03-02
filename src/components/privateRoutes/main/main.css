@@ -31,7 +31,7 @@
   font-size: 1.1rem;
   font-weight: 500;
   border-radius: 15px;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .tiles {
@@ -189,7 +189,7 @@
   height: 5px;
   width: 90%;
 }
-.lesson__proggress__line--resault {
+.lesson__proggress__line--result {
   background-color: #4f4ff8;
   border-radius: 10px;
   height: 5px;
@@ -204,7 +204,7 @@
   border-radius: 20px;
   border: none;
   background-color: #0d0da5;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .challenge {
@@ -256,7 +256,7 @@
   height: 5px;
   width: 100%;
 }
-.challenge__proggress__line--resault {
+.challenge__proggress__line--result {
   background-color: #4f4ff8;
   border-radius: 10px;
   height: 5px;

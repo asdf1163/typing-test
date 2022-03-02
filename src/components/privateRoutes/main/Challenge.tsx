@@ -75,7 +75,7 @@ const Challenge = () => {
             >
               {!challenge.isDone && (
                 <div
-                  className="challenge__proggress__line--resault"
+                  className="challenge__proggress__line--result"
                   style={
                     challenge.type === "percent"
                       ? {

@@ -1,0 +1,42 @@
+.workflow {
+    position: relative;
+    font-size: 50px;
+    font-weight: 600;
+    letter-spacing: 8px;
+    line-height: 1.5;
+    width: 80%;
+    max-height: 85vh;
+    overflow: hidden;
+    text-align: left;
+    text-transform: full-width;
+  }
+  
+  .workflow__container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .workflow__sign {
+    padding-left: 2px;
+    padding-right: 2px;
+    margin: 0 2px;
+    border-radius: 5px;
+  }
+  
+  .workflow__sign--current {
+    background-color: gray;
+  }
+  .workflow__sign--correct {
+    color: rgb(1, 150, 1);
+  }
+  .workflow__sign--wrong {
+    background-color: red;
+  }
+  
+  .typing--input {
+    position: absolute;
+    height: 0;
+    width: 0;
+    opacity: 0;
+    z-index: -1;
+  }

@@ -1,6 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import FinishFun from "./Finish";
-import { Iword, IcurrentWordID, KeyboardEvent, KeyAllowed } from "./workflow.interfaces";
+import {
+  Iword,
+  IcurrentWordID,
+  KeyboardEvent,
+  KeyAllowed,
+} from "./workflow.interfaces";
+import "./workflow.css";
 
 const Workflow = () => {
   const [word, setWord] = useState<Iword[]>([]);
@@ -199,10 +205,7 @@ const Workflow = () => {
       />
     </>
   ) : (
-    <>
-      {console.log("update w Finish")}
-      <FinishFun score={word} typingTime={typingTime} />
-    </>
+    <FinishFun score={word} typingTime={typingTime} />
   );
 };
 

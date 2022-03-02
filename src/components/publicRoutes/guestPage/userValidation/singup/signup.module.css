@@ -1,0 +1,23 @@
+.box__container--form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 60%;
+}
+
+.box__container--form input {
+  width: 100%;
+  padding: 10px;
+}
+.box__container--form button {
+  background-color: #ffa600;
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+}
+
+.box__container--form .policyInformation {
+  font-size: 10px;
+}

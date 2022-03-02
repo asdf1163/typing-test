@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import "./navbar.css";
 import { FaHeart, FaUserCircle } from "react-icons/fa";
 import TokenImage from "../media/images/token.svg";
@@ -8,11 +8,16 @@ const Navbar = () => {
   const iconSize = 40;
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
 
   const searchText = (event: React.FormEvent) => {
     event.preventDefault();
     inputRef.current?.blur();
     console.log("search bar doesn't work yet");
+  };
+
+  const userMenu = () => {
+    setOpenMenu(!openMenu);
   };
 
   return (
@@ -48,8 +53,17 @@ const Navbar = () => {
             alt="token"
           />
         </div>
-        <div className="user__profile">
-          <FaUserCircle size={iconSize} />
+        <div className="user__profile" onClick={userMenu}>
+          <FaUserCircle size={iconSize} title={"asdf"} />
+          {openMenu && (
+            <div className="user__menu" onBlur={userMenu}>
+              <ul>
+                <li>Profile</li>
+                <li>Settings</li>
+                <li onClick={() => console.log("nie działa")}>Logout</li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </nav>

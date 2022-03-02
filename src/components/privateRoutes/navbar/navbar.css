@@ -52,7 +52,6 @@
   width: 33%;
 }
 
-
 .user__lives {
   display: flex;
   justify-content: center;
@@ -64,7 +63,7 @@
 }
 
 .user__lives--number {
-    position: absolute;
+  position: absolute;
 }
 
 .user__tokens {
@@ -73,7 +72,37 @@
   width: fit-content;
 }
 
-.user__tokens--amount
-{
-    margin-right: 10px;
+.user__tokens--amount {
+  margin-right: 10px;
+}
+
+.user__profile svg{
+  cursor: pointer;
+}
+
+.user__menu {
+  position: absolute;
+  right: 10px;
+  height: fit-content;
+  background-color: #fffff3;
+  color: black;
+  font-size: 1.2em;
+  border-radius: 10px;
+}
+
+.user__menu ul {
+  text-align: left;
+  list-style-type: none;
+  padding: 0px 10px;
+}
+
+.user__menu ul li {
+  padding: 1vh 1vw;
+  cursor: pointer;
+}
+
+.user__menu ul li:hover{
+  /* font-size: 1.1em; */
+  font-weight: 600;
+  /* font-size: 40px; */
 }

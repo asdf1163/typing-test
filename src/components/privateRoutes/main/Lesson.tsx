@@ -12,7 +12,7 @@ const Lesson = () => {
             <span className="lesson__proggress--percent">60%</span>
           </span>
           <div className="lesson__proggress__line">
-            <div className="lesson__proggress__line--resault" />
+            <div className="lesson__proggress__line--result" />
           </div>
         </div>
         <div className="lesson__button">

@@ -1,5 +1,5 @@
 import React from "react";
-import Avatar from '../../media/images/avatar.webp'
+import Avatar from '../media/images/avatar.webp'
 
 const TopTen = () => {
   const data = [

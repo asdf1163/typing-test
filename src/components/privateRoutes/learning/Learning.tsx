@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import {
   IdataCategory,
@@ -50,7 +50,7 @@ const Learning = () => {
     { id: 14, name: "", subtitles: [{}], proggress: 0, medals: [{}] },
   ];
 
-  let amountOfBoxesDefault = 0;
+  const [amountOfBoxesDefault, setAmountOfBoxesDefault] = useState(0);
   const [container, setContainer] = useState<any>([]);
   const [choosedCategory, setChoosedCategory] = useState<number>(0);
   const [lessonSlidesPosition, setLessonSlidesPosition] =
@@ -69,7 +69,7 @@ const Learning = () => {
 
   const changePosition = {
     moveWindowValue: 100,
-    changePosition: function (slidePosition: number, slideNumber: number) {
+    changePosition: function (slideNumber: number, slidePosition: number) {
       return setLessonSlidesPosition({
         ...lessonSlidesPosition,
         slide: slideNumber,
@@ -78,14 +78,14 @@ const Learning = () => {
     },
     toRight: function () {
       return this.changePosition(
-        -this.moveWindowValue,
-        lessonSlidesPosition.slide + 1
+        lessonSlidesPosition.slide + 1,
+        -this.moveWindowValue
       );
     },
     toLeft: function () {
       return this.changePosition(
-        this.moveWindowValue,
-        lessonSlidesPosition.slide - 1
+        lessonSlidesPosition.slide - 1,
+        this.moveWindowValue
       );
     },
   };
@@ -103,19 +103,22 @@ const Learning = () => {
     },
   };
 
-  const sliceElements = (minValue: number, maxValue: number) => {
-    const newContainer = lessons.slice(minValue, maxValue);
-    return newContainer;
-  };
+  const sliceElements = useCallback(
+    (minValue: number, maxValue: number) => {
+      const newContainer = lessons.slice(minValue, maxValue);
+      return newContainer;
+    },
+    [lessons]
+  );
 
-  const amountOfBoxesInContainer = () => {
+  const amountOfBoxesInContainer = useCallback(() => {
     const windowWidth = window.innerWidth;
     let boxWidth = 300; //px
     let marginInBoxCSS = windowWidth * 0.03;
 
     const amountOfBoxes = Math.floor(windowWidth / (boxWidth + marginInBoxCSS));
     if (amountOfBoxes !== amountOfBoxesDefault) {
-      amountOfBoxesDefault = amountOfBoxes;
+      setAmountOfBoxesDefault(amountOfBoxes);
       const arrayOfLessons = [];
       const lengthOfLessons = lessons.length;
       for (
@@ -131,21 +134,48 @@ const Learning = () => {
       setContainer(arrayOfLessons);
       return true;
     }
-  };
+  }, [amountOfBoxesDefault, lessons, sliceElements]);
+
+  const changeAmountOfDisplayedBoxes = useCallback(() => {
+    amountOfBoxesInContainer();
+    console.log("slide", lessonSlidesPosition.slide);
+    console.log("container.length", container.length);
+
+    if (
+      lessonSlidesPosition.slide >= container.length &&
+      lessonSlidesPosition.slide !== 0
+    ) {
+      console.log("zmien", (container.length - 1) * 100);
+      return changePosition.changePosition(
+        container.length - 1,
+        -lessonSlidesPosition.position - (container.length - 1) * 100
+      );
+    }
+  }, [
+    changePosition,
+    container,
+    amountOfBoxesInContainer,
+    lessonSlidesPosition,
+  ]);
 
   useEffect(() => {
-    window.addEventListener("resize", amountOfBoxesInContainer);
+    window.addEventListener("resize", changeAmountOfDisplayedBoxes);
 
     return () => {
-      window.removeEventListener("resize", amountOfBoxesInContainer);
+      window.removeEventListener("resize", changeAmountOfDisplayedBoxes);
     };
-  }, []);
+  }, [
+    container,
+    amountOfBoxesInContainer,
+    changeAmountOfDisplayedBoxes,
+    changePosition,
+    lessonSlidesPosition,
+  ]);
 
   useEffect(() => {
     amountOfBoxesInContainer();
-  }, []);
+  }, [amountOfBoxesInContainer]);
 
-  console.log("useState - Container", container);
   return (
     <div className="learning">
       <div className="advanceCategories">
