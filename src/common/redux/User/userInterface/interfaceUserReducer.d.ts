@@ -1,18 +1,17 @@
 export interface IinitialState {
-    isLoggedIn: any,
+    isLoggedIn: boolean,
     userData: object,
     error: string
 }
 
-
 interface IsuccessUserData {
     type: userTypes.SUCCESS_USER_DATA
-    payload: string
+    payload: IinitialState['userData']
 }
 
 interface IfailedUserData {
     type: userTypes.FAILED_USER_DATA
-    payload: string
+    payload: IinitialState['error']
 }
 
 export type Actions = IsuccessUserData | IfailedUserData

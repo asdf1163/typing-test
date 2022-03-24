@@ -4,8 +4,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PrivateRoutesIndex from "./components/privateRoutes/PrivateRoutesIndex";
 import PublicRoutesIndex from "./components/publicRoutes/guestPage/PublicRoutesIndex";
 import { connect } from "react-redux";
+import { IinitialState } from "./common/redux/User/userInterface/interfaceUserReducer";
 
-function App({ userValidation }: any) {
+function App(userValidation: IinitialState) {
   console.log("uservalidation", userValidation);
 
   const [auth, setAuth] = useState<boolean>(false);
@@ -58,9 +59,9 @@ function App({ userValidation }: any) {
   );
 }
 
-const mapStateToProps = (userVal: any) => {
+const mapStateToProps = (userVal: { userData: IinitialState }) => {
   const userValidation = userVal.userData;
-  return { userValidation };
+  return userValidation;
 };
 
 export default connect(mapStateToProps)(App);

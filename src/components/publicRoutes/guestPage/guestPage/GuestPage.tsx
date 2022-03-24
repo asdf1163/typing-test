@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import style from "./guestPage.module.css";
 
 const GuestPage = () => {
-  console.log(style);
   return (
     <div>
       <div className={style.page}>
@@ -13,7 +12,6 @@ const GuestPage = () => {
             <Link to="/login">
               <div className={style.login}>
                 <button className={style["login--button"]}>LOG IN</button>
-                {/* <button className={style['navbar__right--button']}>LOG IN</button> */}
               </div>
             </Link>
           </span>

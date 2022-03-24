@@ -1,44 +1,52 @@
 import React, { useRef } from "react";
-import { Iword } from "./workflow.interfaces";
+import { useCallback } from "react";
+import {
+  IcountCorrectnessOfCharacters,
+  IwordList,
+} from "./workflow.interfaces";
 
 interface IpassingProps {
-  score: Iword | Iword[];
+  score: IwordList[][];
   typingTime: number;
 }
- 
-const FinishFun = ({ score, typingTime }: IpassingProps): JSX.Element => {
-  const countFalseCharacters = useRef<number>(0);
-  const countCorrectCharacters = useRef<number>(0);
-  const countSUM = useRef<number>(0);
 
-  const countCorrectness = () => {
+const FinishFun = ({ score, typingTime }: IpassingProps): JSX.Element => {
+  const characterTypes = useRef<IcountCorrectnessOfCharacters>({
+    correctType: 0,
+    falseType: 0,
+    sumType: 0,
+  });
+
+  const countCorrectness = useCallback(() => {
     console.log("score", score);
-    score.map((word:Iword[]) =>
-      word.map((character:Iword) =>
+    score.map((word: IwordList[]) => {
+      console.log("word", word);
+      return word.map((character: IwordList) =>
         character.correct === false
-          ? countFalseCharacters.current++
-          : countCorrectCharacters.current++
-      )
-    );
-    countSUM.current = countCorrectCharacters.current + countFalseCharacters.current;
-    console.log(countFalseCharacters.current);
-    return 0;
-  };
+          ? characterTypes.current.falseType++
+          : characterTypes.current.correctType++
+      );
+    });
+    characterTypes.current.sumType =
+      characterTypes.current.falseType + characterTypes.current.correctType;
+  }, [score]);
 
   const countWPM = () => {
-    const avgWordLength = countSUM.current / score.length;
-    console.log('avgWordLength: ',avgWordLength);
-    
-    const correctTypes = countCorrectCharacters.current/avgWordLength;
+    const avgWordLength = characterTypes.current.sumType / score.length;
+    console.log("avgWordLength: ", avgWordLength);
+
+    const correctTypes = characterTypes.current.correctType / avgWordLength;
     const time = typingTime / 60;
     return Math.round(correctTypes / time);
   };
 
   const countAccuracy = () => {
-    const avgAccuracy = Math.floor((countCorrectCharacters.current/countSUM.current)*100);
-    return avgAccuracy 
+    const avgAccuracy = Math.floor(
+      (characterTypes.current.correctType / characterTypes.current.sumType) *
+        100
+    );
+    return avgAccuracy;
   };
-  
 
   const countTime = () => {
     const minute = Math.floor(typingTime / 60);
@@ -54,10 +62,10 @@ const FinishFun = ({ score, typingTime }: IpassingProps): JSX.Element => {
     <div>
       Finish
       <p style={{ color: "green", fontWeight: 700 }}>
-        Correct types: {countCorrectCharacters.current}
+        Correct types: {characterTypes.current.correctType}
       </p>
       <p style={{ color: "red", fontWeight: 700 }}>
-        Failed types: {countFalseCharacters.current}
+        Failed types: {characterTypes.current.falseType}
       </p>
       <p>AVG: {countWPM()} WPM</p>
       <p>Acc: {countAccuracy()}%</p>

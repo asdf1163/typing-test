@@ -4,6 +4,7 @@ export interface IloginForm {
 }
 
 export interface IsignupForm {
+    [a: string]: string
     username: string,
     password: string,
     email: string

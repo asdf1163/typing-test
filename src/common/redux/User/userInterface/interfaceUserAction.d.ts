@@ -1,4 +1,3 @@
-export interface IcheckValidation{
-    userData: object,
-    error: string
+export interface IuserProp {
+    username: string
 }

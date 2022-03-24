@@ -35,13 +35,13 @@
 }
 
 .tiles {
+  height: fit-content;
   display: grid;
   grid-template-columns: minmax(400px, 30%) minmax(300px, 20%) minmax(
       300px,
       20%
     );
   grid-template-rows: minmax(230px, 60%) minmax(80px, 15%) minmax(120px, 130px);
-  height: 75%;
   width: 100%;
   gap: 2vh 4vw;
   justify-content: center;
@@ -135,12 +135,11 @@
   border-radius: 30px;
 }
 
-.user__avatar--img{
+.user__avatar--img {
   width: inherit;
   height: inherit;
   border-radius: inherit;
 }
-
 
 .user__name {
 }
@@ -302,4 +301,13 @@
   grid-column: 2;
   grid-row-start: 2;
   grid-row-end: 4;
+}
+
+@media screen and (min-height: 780px) {
+  .tiles {
+    zoom: 1.25;
+  }
+  .categories__options--button {
+    zoom: 1.15;
+  }
 }

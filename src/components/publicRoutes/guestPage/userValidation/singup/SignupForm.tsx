@@ -1,17 +1,17 @@
-import axios from "axios";
 import React from "react";
+import { postUsertDataSignup } from "../../../../../common/apis/userApi";
 import { IsignupForm } from "../interfaceUserValidation";
 import style from "./signup.module.css";
 
 interface IsignupProps {
   signupForm: IsignupForm;
-  setSignupForm: any;
+  setSignupForm: React.Dispatch<React.SetStateAction<IsignupForm>>;
 }
 
 const SignupForm = ({ signupForm, setSignupForm }: IsignupProps) => {
   const changeOptions = {
-    changeValue: function (name: string, value: any) {
-      setSignupForm((prevState: any) => ({
+    changeValue: function (name: string, value: string) {
+      setSignupForm((prevState: IsignupForm) => ({
         ...prevState,
         [name]: value,
       }));
@@ -26,16 +26,23 @@ const SignupForm = ({ signupForm, setSignupForm }: IsignupProps) => {
       this.changeValue("email", value);
     },
   };
-
   const handleSumbit = (event: React.FormEvent) => {
     event.preventDefault();
-    axios
-      .post("http://localhost:8080/users/signup", signupForm)
-      .then((data) => {
-        console.log(data);
-        console.log("Data send successfully");
-      })
-      .catch((error) => console.log(error));
+    const decide = checkDataValidation(signupForm);
+    console.log("data is ready to send: ", !decide.includes(true));
+    if (!decide.includes(true))
+      postUsertDataSignup(signupForm)
+        .then((data) => {
+          console.log(data);
+          console.log("Data send successfully");
+        })
+        .catch((error) => console.log(error));
+  };
+
+  const checkDataValidation = (signupForm: IsignupForm) => {
+    return Object.keys(signupForm).map(
+      (data: string) => signupForm[data] === ""
+    );
   };
 
   return (

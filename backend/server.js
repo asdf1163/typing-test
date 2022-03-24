@@ -1,4 +1,5 @@
 const express = require("express");
+// var createError = require('http-errors')
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -30,6 +31,10 @@ app.use(
 app.use(cors());
 app.use("/users", userRoute);
 
+// app.use((req, res, next) => {
+//   next(createError(404, "Wrong Database Connection"));
+// });
+
 app.get("/", function (req, res, next) {
   res.json({
     status: "Success!",
@@ -42,11 +47,12 @@ const server = app.listen(port, function () {
   console.log(`Connected to port ${port}`);
 });
 
-app.use((req, res, next) => {
-  next(createError(404));
-});
-app.use(function (err, req, res, next) {
-  console.error(err.message);
-  if (!err.statusCode) err.statusCode = 500;
-  res.status(err.statusCode).send(err.message);
-});
+// app.use((req, res, next) => {
+//   next(createError(404, 'Wrong Database Connection'));
+// });
+
+// app.use(function (err, req, res, next) {
+//   console.error(err.message);
+//   if (!err.statusCode) err.statusCode = 500;
+//   res.status(err.statusCode).send(err.message);
+// });

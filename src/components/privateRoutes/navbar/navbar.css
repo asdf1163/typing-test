@@ -76,7 +76,7 @@
   margin-right: 10px;
 }
 
-.user__profile svg{
+.user__profile svg {
   cursor: pointer;
 }
 
@@ -101,8 +101,12 @@
   cursor: pointer;
 }
 
-.user__menu ul li:hover{
-  /* font-size: 1.1em; */
+.user__menu ul li:hover {
   font-weight: 600;
-  /* font-size: 40px; */
+}
+
+@media screen and (min-width: 1600px) {
+  .navbar {
+    zoom: 1.25;
+  }
 }

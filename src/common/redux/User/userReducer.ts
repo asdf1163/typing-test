@@ -7,7 +7,7 @@ const initialState: IinitialState = {
   error: "",
 };
 
-export const userReducer = (state = initialState, action: Actions): object => {
+export const userReducer = (state = initialState, action: Actions) => {
   switch (action.type) {
     case userTypes.SUCCESS_USER_DATA:
       return {
@@ -18,7 +18,7 @@ export const userReducer = (state = initialState, action: Actions): object => {
     case userTypes.FAILED_USER_DATA:
       return {
         isLoggedIn: false,
-        userData: [],
+        userData: {},
         error: action.payload,
       };
 

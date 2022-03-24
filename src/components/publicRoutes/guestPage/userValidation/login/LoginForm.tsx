@@ -3,12 +3,12 @@ import style from "./login.module.css";
 import { useDispatch } from "react-redux";
 import { checkUserValidationLogin } from "../../../../../common/redux/User/userAction";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { IloginForm } from "../interfaceUserValidation";
+import { postUsertDataLogin } from "../../../../../common/apis/userApi";
 
 interface IloginProps {
   loginForm: IloginForm;
-  setLoginForm: any;
+  setLoginForm: React.Dispatch<React.SetStateAction<IloginForm>>;
 }
 
 const LoginForm = ({ loginForm, setLoginForm }: IloginProps) => {
@@ -17,8 +17,8 @@ const LoginForm = ({ loginForm, setLoginForm }: IloginProps) => {
   const [isAttemptCorrect, setAttemptCorrect] = useState<boolean>(true);
 
   const changeOptions = {
-    changeValue: function (name: string, value: any) {
-      setLoginForm((prevState: any) => ({
+    changeValue: function (name: string, value: string) {
+      setLoginForm((prevState: IloginForm) => ({
         ...prevState,
         [name]: value,
       }));
@@ -33,8 +33,7 @@ const LoginForm = ({ loginForm, setLoginForm }: IloginProps) => {
 
   const handleSumbit = async (event: React.FormEvent) => {
     event.preventDefault();
-    axios
-      .post("http://localhost:8080/users/login", loginForm)
+    postUsertDataLogin(loginForm)
       .then((result) => {
         checkIfUserExist(result);
         return result;
@@ -45,7 +44,7 @@ const LoginForm = ({ loginForm, setLoginForm }: IloginProps) => {
       });
   };
 
-  function checkIfUserExist(result: any) {
+  function checkIfUserExist(result: { data: { length: number } }) {
     if (result?.data.length !== 0) {
       dispatch(checkUserValidationLogin({ username: loginForm.username }));
       navigate("/", { replace: true });

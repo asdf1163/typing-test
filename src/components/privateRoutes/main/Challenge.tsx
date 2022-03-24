@@ -4,7 +4,7 @@ import { MdDone } from "react-icons/md";
 const Challenge = () => {
   interface IdataProps {
     name: string;
-    type: string;
+    type: "percent" | "count";
     amount: number;
     maxAmount: number;
     isDone: boolean;
@@ -34,7 +34,7 @@ const Challenge = () => {
     },
   ];
 
-  const countPercent = (
+  const countProggressLinePercent = (
     amount: IdataProps["amount"],
     maxAmount: IdataProps["maxAmount"]
   ) => {
@@ -55,7 +55,9 @@ const Challenge = () => {
             }
             key={challenge.name}
           >
-            {challenge.isDone && <MdDone size={40} style={{ position: "absolute" }} />}
+            {challenge.isDone && (
+              <MdDone size={40} style={{ position: "absolute" }} />
+            )}
             <span className="challenge__proggress--information">
               <div className="challenge__proggress--title">
                 {challenge.name}
@@ -81,7 +83,10 @@ const Challenge = () => {
                       ? {
                           width: `${challenge.amount}%`,
                         }
-                      : countPercent(challenge.amount, challenge.maxAmount)
+                      : countProggressLinePercent(
+                          challenge.amount,
+                          challenge.maxAmount
+                        )
                   }
                 />
               )}

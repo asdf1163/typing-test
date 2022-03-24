@@ -1,5 +1,6 @@
-export interface Iword {
-  [x:string]:any;
+export interface IwordList {
+  [x: number]: {splitedWord: string,  correct: boolean | null,  length: number};
+  // length: number;
   splitedWord: string;
   correct: boolean | null;
 }
@@ -9,9 +10,15 @@ export interface IcurrentWordID {
   sign: number;
 }
 
-export interface KeyboardEvent {
+export interface IKeyboardEvent {
   key: string;
   keyCode: number;
+}
+
+export interface IcountCorrectnessOfCharacters {
+  correctType: number;
+  falseType: number;
+  sumType: number;
 }
 
 export enum KeyAllowed {
@@ -92,4 +99,11 @@ export enum KeyAllowed {
   CAPS_LOCK = 20,
   DELETE = 46,
   BACKSPACE = 8,
+}
+
+export enum classOptions {
+  default = "workflow__sign",
+  current = `workflow__sign workflow__sign--current`,
+  correct = `workflow__sign workflow__sign--correct`,
+  wrong = `workflow__sign workflow__sign--wrong`,
 }

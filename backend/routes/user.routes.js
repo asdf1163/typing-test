@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
+var createError = require("http-errors");
 
 let user = require("../models/userSchema");
 let userLogin = require("../models/userLoginSchema");
@@ -8,7 +9,7 @@ let userLogin = require("../models/userLoginSchema");
 const createUser = (propsData, res) => {
   user.create(propsData, (error, data) => {
     if (error) {
-      return console.logj('error',error);
+      return console.logj("error", error);
     } else {
       console.log("User created successfully !!!");
       res.json(data);
@@ -23,13 +24,13 @@ router.route("/signup").post((req, res, next) => {
   ];
   user.find({ $or: parametrs }, function (error, data) {
     if (error) {
-      return next(error);
+      return next(createError(401, "Missing data ?"));
     } else {
       if (data.length === 0) {
         createUser(req.body, res);
         return true;
       } else {
-        return console.log("Doubled vales");
+        return console.log("User Not Created! Doubled vales");
       }
     }
   });
@@ -38,10 +39,9 @@ router.route("/signup").post((req, res, next) => {
 router.route("/login").post((req, res, next) => {
   userLogin.find(req.body, function (error, data) {
     if (error) {
-      return next(error);
+      return next(createError(401, "User not found ?"));
     } else {
       res.json(data);
-      res.render('')
     }
   });
 });

@@ -51,7 +51,7 @@ const Learning = () => {
   ];
 
   const [amountOfBoxesDefault, setAmountOfBoxesDefault] = useState(0);
-  const [container, setContainer] = useState<any>([]);
+  const [container, setContainer] = useState<Ilesson[][]>([]);
   const [choosedCategory, setChoosedCategory] = useState<number>(0);
   const [lessonSlidesPosition, setLessonSlidesPosition] =
     useState<IlessonSlidePosition>({
@@ -119,14 +119,14 @@ const Learning = () => {
     const amountOfBoxes = Math.floor(windowWidth / (boxWidth + marginInBoxCSS));
     if (amountOfBoxes !== amountOfBoxesDefault) {
       setAmountOfBoxesDefault(amountOfBoxes);
-      const arrayOfLessons = [];
+      const arrayOfLessons: Ilesson[][] = [];
       const lengthOfLessons = lessons.length;
       for (
         let minValue = 0, maxValue = amountOfBoxes;
         minValue <= lengthOfLessons;
         minValue = maxValue, maxValue += amountOfBoxes
       ) {
-        const newContainer = sliceElements(minValue, maxValue);
+        const newContainer: Ilesson[] = sliceElements(minValue, maxValue);
         if (newContainer.length > 0) {
           arrayOfLessons.push(newContainer);
         }
