@@ -1,0 +1,160 @@
+import { Ilesson } from "./learning.interfaces";
+
+export const userLesson = [
+  {
+    id: 0,
+    lessonId: 0,
+    proggress: 100,
+    medal: "gold",
+  },
+];
+
+export const userMoreLessonDetails = {
+  subtitles: {
+    lecture: [{}],
+    practice: [{}],
+  },
+};
+
+export const lessons: Ilesson[] = [
+  {
+    id: 0,
+    name: "Learn F and K",
+    about: "",
+    imgURL: "",
+    subtitles: [{}],
+    proggress: 100,
+    medal: "gold",
+  },
+  {
+    id: 1,
+    name: "Title",
+    about: "",
+    imgURL: "",
+    subtitles: [{}],
+    proggress: 20,
+    medal: "gold",
+  },
+  {
+    id: 2,
+    name: "Title",
+    about: "",
+    imgURL: "",
+    subtitles: [{}],
+    proggress: 55,
+    medal: "gold",
+  },
+  {
+    id: 3,
+    name: "Title",
+    about: "",
+    imgURL: "",
+    subtitles: [{}],
+    proggress: 32,
+    medal: "silver",
+  },
+  {
+    id: 4,
+    name: "Title",
+    about: "",
+    imgURL: "",
+    subtitles: [{}],
+    proggress: 50,
+    medal: "bronze",
+  },
+  {
+    id: 5,
+    name: "Title",
+    about: "",
+    imgURL: "",
+    subtitles: [{}],
+    proggress: 20,
+    medal: "silver",
+  },
+  {
+    id: 6,
+    name: "Title",
+    about: "",
+    imgURL: "",
+    subtitles: [{}],
+    proggress: 10,
+    medal: "bronze",
+  },
+  {
+    id: 7,
+    name: "Title",
+    about: "",
+    imgURL: "",
+    subtitles: [{}],
+    proggress: 0,
+    medal: null,
+  },
+  {
+    id: 8,
+    name: "Title",
+    about: "",
+    imgURL: "",
+    subtitles: [{}],
+    proggress: 0,
+    medal: null,
+  },
+  {
+    id: 9,
+    name: "Title",
+    about: "",
+    imgURL: "",
+    subtitles: [{}],
+    proggress: 0,
+    medal: null,
+  },
+  {
+    id: 10,
+    name: "Title",
+    about: "",
+    imgURL: "",
+    subtitles: [{}],
+    proggress: 0,
+    medal: null,
+  },
+  {
+    id: 11,
+    name: "Title",
+    about: "",
+    imgURL: "",
+    subtitles: [{}],
+    proggress: 0,
+    medal: null,
+  },
+  {
+    id: 12,
+    name: "Title",
+    about: "",
+    imgURL: "",
+    subtitles: [{}],
+    proggress: 0,
+    medal: null,
+  },
+  {
+    id: 13,
+    name: "Title",
+    about: "",
+    imgURL: "",
+    subtitles: [{}],
+    proggress: 0,
+    medal: null,
+  },
+  {
+    id: 14,
+    name: "Title",
+    about: "",
+    imgURL: "",
+    subtitles: [{}],
+    proggress: 0,
+    medal: null,
+  },
+];
+
+// const lessons = useMemo<Ilesson[]>(
+//   () => [data],
+//   []
+// );

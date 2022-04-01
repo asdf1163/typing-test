@@ -1,0 +1,86 @@
+.lessonBox__box {
+  width: 300px;
+  height: 400px;
+  margin: 1.5vw;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: #c2c2c2;
+  align-items: center;
+  position: relative;
+}
+
+.lessonBox__image {
+  height: 75%;
+  width: 100%;
+  background-color: red;
+  border-radius: 20px;
+  position: relative;
+}
+
+.lessonBox__image img {
+}
+
+.lessonBox__image--description {
+  height: 100%;
+  width: 100%;
+  border-radius: 18px;
+  display: none;
+}
+
+.lessonBox__image:hover .lessonBox__image--description {
+  background-color: #000000a0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: -20px;
+}
+
+.lessonBox__image--text {
+  width: 80%;
+}
+
+.lessonBox__information {
+  height: 22%;
+  width: 100%;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  position: relative;
+}
+.lessonBox__container {
+  display: flex;
+  width: 90%;
+  min-height: 40px;
+  justify-content: space-between;
+  align-items: center;
+}
+.lessonBox__title {
+  font-size: 1.15em;
+}
+.lessonBox__medal {
+    width: 2.2em;
+}
+
+.lessonBox__proggress {
+  width: 80%;
+  line-height: 1.7rem;
+  font-size: 12px;
+}
+
+.lessonBox__progrressBar {
+  width: 100%;
+  background: black;
+  border-radius: 20px;
+}
+
+.lessonBox__progrressBar--line {
+  background-color: red;
+  border-radius: 10px;
+  height: 5px;
+  width: 90%;
+}

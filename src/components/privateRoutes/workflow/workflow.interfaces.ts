@@ -1,6 +1,5 @@
 export interface IwordList {
-  [x: number]: {splitedWord: string,  correct: boolean | null,  length: number};
-  // length: number;
+  [x: number]: { splitedWord: string, correct: boolean | null, length: number };
   splitedWord: string;
   correct: boolean | null;
 }

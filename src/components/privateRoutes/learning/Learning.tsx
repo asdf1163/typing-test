@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import {
   IdataCategory,
@@ -6,6 +6,8 @@ import {
   Ilesson,
 } from "./learning.interfaces";
 import "./learning.css";
+import { lessons } from "./mockUpData";
+import LearningBox from "./learningBox/LearningBox";
 
 const Learning = () => {
   const [Category, setCategory] = useState<IdataCategory[]>([
@@ -26,30 +28,6 @@ const Learning = () => {
     },
   ]);
 
-  const lessons: Ilesson[] = [
-    {
-      id: 0,
-      name: "learn F and K",
-      subtitles: [{}],
-      proggress: 0,
-      medals: [{}],
-    },
-    { id: 1, name: "", subtitles: [{}], proggress: 0, medals: [{}] },
-    { id: 2, name: "", subtitles: [{}], proggress: 0, medals: [{}] },
-    { id: 3, name: "", subtitles: [{}], proggress: 0, medals: [{}] },
-    { id: 4, name: "", subtitles: [{}], proggress: 0, medals: [{}] },
-    { id: 5, name: "", subtitles: [{}], proggress: 0, medals: [{}] },
-    { id: 6, name: "", subtitles: [{}], proggress: 0, medals: [{}] },
-    { id: 7, name: "", subtitles: [{}], proggress: 0, medals: [{}] },
-    { id: 8, name: "", subtitles: [{}], proggress: 0, medals: [{}] },
-    { id: 9, name: "", subtitles: [{}], proggress: 0, medals: [{}] },
-    { id: 10, name: "", subtitles: [{}], proggress: 0, medals: [{}] },
-    { id: 11, name: "", subtitles: [{}], proggress: 0, medals: [{}] },
-    { id: 12, name: "", subtitles: [{}], proggress: 0, medals: [{}] },
-    { id: 13, name: "", subtitles: [{}], proggress: 0, medals: [{}] },
-    { id: 14, name: "", subtitles: [{}], proggress: 0, medals: [{}] },
-  ];
-
   const [amountOfBoxesDefault, setAmountOfBoxesDefault] = useState(0);
   const [container, setContainer] = useState<Ilesson[][]>([]);
   const [choosedCategory, setChoosedCategory] = useState<number>(0);
@@ -67,30 +45,32 @@ const Learning = () => {
     setCategory(tempArray);
   };
 
-  const changePosition = {
-    moveWindowValue: 100,
-    changePosition: function (slideNumber: number, slidePosition: number) {
-      return setLessonSlidesPosition({
-        ...lessonSlidesPosition,
-        slide: slideNumber,
-        position: lessonSlidesPosition.position + slidePosition,
-      });
-    },
-    toRight: function () {
-      return this.changePosition(
-        lessonSlidesPosition.slide + 1,
-        -this.moveWindowValue
-      );
-    },
-    toLeft: function () {
-      return this.changePosition(
-        lessonSlidesPosition.slide - 1,
-        this.moveWindowValue
-      );
-    },
-  };
+  const changePosition = useMemo(() => {
+    return {
+      moveWindowValue: 100,
+      changePosition: function (slideNumber: number, slidePosition: number) {
+        return setLessonSlidesPosition({
+          ...lessonSlidesPosition,
+          slide: slideNumber,
+          position: lessonSlidesPosition.position + slidePosition,
+        });
+      },
+      toRight: function () {
+        return this.changePosition(
+          lessonSlidesPosition.slide + 1,
+          -this.moveWindowValue
+        );
+      },
+      toLeft: function () {
+        return this.changePosition(
+          lessonSlidesPosition.slide - 1,
+          this.moveWindowValue
+        );
+      },
+    };
+  }, [lessonSlidesPosition]);
 
-  const buttonValidation = {
+  const slideButtonValidation = {
     previousSlide: () => {
       if (lessonSlidesPosition.slide === 0) {
         return false;
@@ -102,14 +82,6 @@ const Learning = () => {
       } else return true;
     },
   };
-
-  const sliceElements = useCallback(
-    (minValue: number, maxValue: number) => {
-      const newContainer = lessons.slice(minValue, maxValue);
-      return newContainer;
-    },
-    [lessons]
-  );
 
   const amountOfBoxesInContainer = useCallback(() => {
     const windowWidth = window.innerWidth;
@@ -126,7 +98,7 @@ const Learning = () => {
         minValue <= lengthOfLessons;
         minValue = maxValue, maxValue += amountOfBoxes
       ) {
-        const newContainer: Ilesson[] = sliceElements(minValue, maxValue);
+        const newContainer: Ilesson[] = lessons.slice(minValue, maxValue);
         if (newContainer.length > 0) {
           arrayOfLessons.push(newContainer);
         }
@@ -134,7 +106,7 @@ const Learning = () => {
       setContainer(arrayOfLessons);
       return true;
     }
-  }, [amountOfBoxesDefault, lessons, sliceElements]);
+  }, [amountOfBoxesDefault]);
 
   const changeAmountOfDisplayedBoxes = useCallback(() => {
     amountOfBoxesInContainer();
@@ -148,7 +120,7 @@ const Learning = () => {
       console.log("zmien", (container.length - 1) * 100);
       return changePosition.changePosition(
         container.length - 1,
-        -lessonSlidesPosition.position - (container.length - 1) * 100
+        (container.length - 2) * 100
       );
     }
   }, [
@@ -160,7 +132,6 @@ const Learning = () => {
 
   useEffect(() => {
     window.addEventListener("resize", changeAmountOfDisplayedBoxes);
-
     return () => {
       window.removeEventListener("resize", changeAmountOfDisplayedBoxes);
     };
@@ -196,7 +167,7 @@ const Learning = () => {
         </div>
       </div>
       <div className="lessons">
-        {buttonValidation.previousSlide() && (
+        {slideButtonValidation.previousSlide() && (
           <div className="prevSlide">
             <AiOutlineLeft size={50} onClick={() => changePosition.toLeft()} />
           </div>
@@ -210,18 +181,16 @@ const Learning = () => {
           {container.map((slide: Ilesson[], index: number) => {
             return (
               <div className="lessons__container" key={`slide${index}`}>
-                {slide.map((lesson: { id: Ilesson["id"] }) => {
+                {slide.map((lesson: Ilesson) => {
                   return (
-                    <div className="box" key={`box${lesson.id}`}>
-                      {lesson.id}
-                    </div>
+                    <LearningBox lesson={lesson} key={`box${lesson.id}`} />
                   );
                 })}
               </div>
             );
           })}
         </div>
-        {buttonValidation.nextSlide() && (
+        {slideButtonValidation.nextSlide() && (
           <div className="nextSlide">
             <AiOutlineRight
               size={50}

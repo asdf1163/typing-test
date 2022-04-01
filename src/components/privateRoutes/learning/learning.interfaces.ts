@@ -12,7 +12,9 @@ export interface IlessonSlidePosition {
 export interface Ilesson {
     id: number;
     name: string;
+    about: string;
+    imgURL: string;
     subtitles: object | object[];
     proggress: number;
-    medals: object | object[];
+    medal: "gold" | "silver" | "bronze" | null;
 }

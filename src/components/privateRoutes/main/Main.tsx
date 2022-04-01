@@ -33,8 +33,8 @@ const Main = () => {
 
   const categoryOptions = [
     { name: "Training", URL: "/test" },
-    { name: "Learning", URL: "/learn" },
-    { name: "Games", URL: "/games" },
+    { name: "Learning", URL: "/lesson" },
+    { name: "Games", URL: "/game" },
   ];
   return (
     <div className="main">

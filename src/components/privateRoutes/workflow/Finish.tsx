@@ -5,12 +5,12 @@ import {
   IwordList,
 } from "./workflow.interfaces";
 
-interface IpassingProps {
+export interface IpassingProps {
   score: IwordList[][];
   typingTime: number;
 }
 
-const FinishFun = ({ score, typingTime }: IpassingProps): JSX.Element => {
+const Finish = ({ score, typingTime }: IpassingProps): JSX.Element => {
   const characterTypes = useRef<IcountCorrectnessOfCharacters>({
     correctType: 0,
     falseType: 0,
@@ -74,4 +74,4 @@ const FinishFun = ({ score, typingTime }: IpassingProps): JSX.Element => {
   );
 };
 
-export default FinishFun;
+export default Finish;

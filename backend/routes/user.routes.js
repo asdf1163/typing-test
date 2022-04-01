@@ -3,13 +3,13 @@ const express = require("express");
 const router = express.Router();
 var createError = require("http-errors");
 
-let user = require("../models/userSchema");
+let user = require("../models/userSignupSchema");
 let userLogin = require("../models/userLoginSchema");
 
 const createUser = (propsData, res) => {
   user.create(propsData, (error, data) => {
     if (error) {
-      return console.logj("error", error);
+      return console.log("error", error);
     } else {
       console.log("User created successfully !!!");
       res.json(data);
